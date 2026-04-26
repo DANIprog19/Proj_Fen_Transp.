@@ -1,0 +1,67 @@
+##Exemplo de pagina WEB 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Dashboard Vazão</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; background-color: #f4f4f9; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        h2 { color: #333; }
+        input { display: block; margin: 10px 0; padding: 8px; width: 200px; }
+        button { padding: 10px 20px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+        .result { margin-top: 15px; font-weight: bold; color: #d9534f; }
+    </style>
+</head>
+<body>
+
+    <h1>🚀 Teste de Integração Backend</h1>
+
+    <div class="card">
+        <h2>1. Testar Login</h2>
+        <input type="text" id="user" placeholder="Usuário">
+        <input type="password" id="pass" placeholder="Senha">
+        <button onclick="testarLogin()">Verificar Acesso</button>
+        <div id="login-res" class="result"></div>
+    </div>
+
+    <div class="card">
+        <h2>2. Calcular Vazão</h2>
+        <input type="number" id="vol" placeholder="Volume (L)">
+        <input type="number" id="temp" placeholder="Tempo (s)">
+        <button onclick="testarCalculo()">Calcular</button>
+        <div id="calc-res" class="result"></div>
+    </div>
+
+    <script>
+        async function testarLogin() {
+            const user = document.getElementById('user').value;
+            const pass = document.getElementById('pass').value;
+            
+            // Simulação de chamada para sua rota de login
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ usuario: user, senha: pass })
+            });
+            const data = await response.json();
+            document.getElementById('login-res').innerText = data.mensagem;
+        }
+
+        async function testarCalculo() {
+            const vol = document.getElementById('vol').value;
+            const temp = document.getElementById('temp').value;
+
+            // Chamada para sua rota de leituras
+            const response = await fetch('/leituras/calcular', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ volume: parseFloat(vol), tempo: parseFloat(temp) })
+            });
+            const data = await response.json();
+            document.getElementById('calc-res').innerText = "Resultado: " + data.vazao + " L/s";
+        }
+    </script>
+</body>
+</html>
