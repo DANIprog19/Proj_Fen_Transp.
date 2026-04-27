@@ -18,6 +18,7 @@ Nessa pasta contém a delegação das tarefas.
 Define os endereços (URLs) do site.
 - leituras.py: Cria as rotas como /leituras/calcular.
 - sensores.py: Cria as rotas como /sensores/cadastro.
+- login.py: Cria uma rota que verifica usuário e senha através do banco de dados.
 ## 6. 🗂️ Camada de Utilidades (/utils)
 Ferramentas de suporte que ajudam o projeto.
 - validators.py: Verifica se o usuário não digitou algo errado(ex: tempo negativo ou campos vazios).
