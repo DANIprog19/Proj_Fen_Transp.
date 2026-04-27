@@ -1,18 +1,10 @@
-##Exemplo de pagina WEB 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teste Dashboard Vazão</title>
-    <style>
-        body { font-family: sans-serif; margin: 40px; background-color: #f4f4f9; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        h2 { color: #333; }
-        input { display: block; margin: 10px 0; padding: 8px; width: 200px; }
-        button { padding: 10px 20px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
-        .result { margin-top: 15px; font-weight: bold; color: #d9534f; }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
@@ -27,41 +19,36 @@
     </div>
 
     <div class="card">
-        <h2>2. Calcular Vazão</h2>
-        <input type="number" id="vol" placeholder="Volume (L)">
-        <input type="number" id="temp" placeholder="Tempo (s)">
-        <button onclick="testarCalculo()">Calcular</button>
-        <div id="calc-res" class="result"></div>
+       <h2>2. Calcular Vazão</h2>
+    <input type="number" id="vol" placeholder="Volume (L)">
+    <input type="number" id="temp" placeholder="Tempo (s)">
+    
+    <button onclick="testarCalculo()">Calcular</button>
+    
+    <div id="calc-res" class="result"></div>
     </div>
 
-    <script>
-        async function testarLogin() {
-            const user = document.getElementById('user').value;
-            const pass = document.getElementById('pass').value;
-            
-            // Simulação de chamada para sua rota de login
-            const response = await fetch('/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ usuario: user, senha: pass })
-            });
-            const data = await response.json();
-            document.getElementById('login-res').innerText = data.mensagem;
-        }
+    <div class="card">
+        <h2>3. Sensores Ativos</h2>
+        <button onclick="carregarSensores()">Atualizar Lista</button>
+        <ul id="lista-sensores" style="margin-top: 15px;"></ul>
+    </div>
 
-        async function testarCalculo() {
-            const vol = document.getElementById('vol').value;
-            const temp = document.getElementById('temp').value;
+    <div class="dashboard-grid">
+    <div class="card dash-card">
+        <h3>Sensores Monitorados</h3>
+        <p id="dash-total">--</p>
+    </div>
+    <div class="card dash-card">
+        <h3>Status: Ativos</h3>
+        <p id="dash-ativos" style="color: #28a745;">--</p>
+    </div>
+    <div class="card dash-card">
+        <h3>Última Vazão</h3>
+        <p id="dash-vazao">0.0 L/s</p>
+    </div>
+</div>
 
-            // Chamada para sua rota de leituras
-            const response = await fetch('/leituras/calcular', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ volume: parseFloat(vol), tempo: parseFloat(temp) })
-            });
-            const data = await response.json();
-            document.getElementById('calc-res').innerText = "Resultado: " + data.vazao + " L/s";
-        }
-    </script>
+    <script src="{{ url_for('static', filename='arquivo.js') }}"></script>
 </body>
 </html>

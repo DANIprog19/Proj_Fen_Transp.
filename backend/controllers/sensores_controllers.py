@@ -1,4 +1,5 @@
-from flask import jsonify
+from flask import Response
+import json
 
 class SensoresController:
     @staticmethod
@@ -7,7 +8,11 @@ class SensoresController:
             {"id": 1, "nome": "Sensor Vazão Alpha", "local": "Entrada Principal", "status": "Ativo"},
             {"id": 2, "nome": "Sensor Vazão Beta", "local": "Saída Tanque 2", "status": "Inativo"}
         ]
-        return sensores, 200
+
+        return Response(
+            json.dumps(sensores, ensure_ascii=False, indent=4),
+            mimetype="application/json"
+        ), 200
 
     @staticmethod
     def cadastrar_sensor(dados):
